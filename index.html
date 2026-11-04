@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#18334d"><meta name="description" content="Dashboard de demostración de clientes y aliados de ÁgilCargo. Datos completamente ficticios.">
+  <title>Ágilex · Control de clientes y aliados</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+  <script src="datos/data.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+<aside class="sidebar">
+  <a class="brand" href="#main" aria-label="Ágilex inicio"><span class="brand-icon" aria-hidden="true">a<span>›</span></span><span>ÁGILEX<small>IMPORTACIONES DE CARGA</small></span></a>
+  <div class="workspace-label">CENTRO DE CONTROL</div>
+  <nav aria-label="Navegación principal"><a class="nav-link active" href="#resumen"><span aria-hidden="true">▦</span> Visión general</a><a class="nav-link" href="#clientes"><span aria-hidden="true">☷</span> Clientes y escenarios <b>20</b></a><a class="nav-link" href="Base_Clientes_y_Aliados_Agilcargo_DEMO.xlsx" download><span aria-hidden="true">↓</span> Descargar Excel demo</a><a class="nav-link" href="README.md"><span aria-hidden="true">?</span> Guía de publicación</a></nav>
+  <div class="side-bottom"><span class="side-dot"></span> Entorno de demostración<p>20 clientes ficticios.<br>Sin conexión a sistemas operativos.</p></div>
+</aside>
+<div class="shell">
+  <header class="topbar"><div>Operaciones <span>/</span> <strong>Clientes y aliados</strong></div><div class="top-actions"><span class="demo-pill">DATOS FICTICIOS</span><span class="avatar" aria-label="Demostración">DE</span></div></header>
+  <main id="main">
+    <section class="intro" id="resumen"><div><p class="eyebrow">IMPORTACIONES HACIA COLOMBIA</p><h1>Control de clientes y aliados</h1><p class="subheading">Vigencias, autorizaciones y pendientes antes de cada operación.</p></div><div class="cut"><span>Corte de la demostración</span><strong id="cut-date">04 nov 2026</strong><small>Fecha fija · no son datos en tiempo real</small></div></section>
+    <div class="demo-notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>Una base para practicar.</strong> Todos los clientes, aliados, contactos y soportes son ficticios. Los puertos son ubicaciones geográficas.</p><button id="reset" type="button">Restablecer filtros <span aria-hidden="true">↺</span></button></div>
+    <section class="filters" aria-label="Filtros del dashboard"><label class="search"><span class="sr-only">Buscar cliente, ID o ciudad</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8"/></svg><input id="search" type="search" placeholder="Buscar cliente, ID o ciudad…"></label><label>Semáforo<select id="status"><option value="">Todos los estados</option><option value="VERDE">Verde · al día</option><option value="AMARILLO">Amarillo · programar</option><option value="NARANJA">Naranja · gestionar</option><option value="ROJO">Rojo · no habilitado</option></select></label><label>Modalidad<select id="mode"><option value="">Todas las modalidades</option><option>Marítima</option><option>Aérea</option></select></label><label>Responsable<select id="owner"><option value="">Todos los responsables</option></select></label></section>
+    <section class="kpis" id="kpis" aria-label="Indicadores de clientes" aria-live="polite"></section>
+    <div class="charts-row"><section class="panel status-panel"><div class="panel-head"><div><p class="eyebrow">ESTADO DE CONTROL</p><h2>Semáforo de clientes</h2></div><span class="small-tag">Según filtros</span></div><div class="status-chart"><div class="donut" id="donut" role="img" aria-label="Distribución por semáforo"><div><strong id="donut-total">20</strong><span>clientes</span></div></div><div id="status-legend" class="chart-legend"></div></div><p class="panel-note">El semáforo combina la aptitud y la prioridad de la ficha del Excel.</p></section>
+    <section class="panel model-panel"><div class="panel-head"><div><p class="eyebrow">MODELO DE SERVICIO</p><h2>Cómo se atiende la operación</h2></div></div><div id="models"></div><div class="ops-summary"><span>Operaciones en curso</span><strong id="ops">0</strong><small>Dato simulado de la base</small></div></section>
+    <section class="panel actions-panel"><div class="panel-head"><div><p class="eyebrow">PRÓXIMA ACCIÓN</p><h2>Prioridades de gestión</h2></div><span class="pulse" aria-hidden="true"></span></div><div id="priorities"></div></section></div>
+    <section class="panel clients-panel" id="clientes"><div class="table-heading"><div><p class="eyebrow">BASE DE CLIENTES</p><h2>Escenarios de demostración <span id="table-count" class="count-tag">20</span></h2></div><button class="secondary" id="csv" type="button">↓ Exportar vista CSV</button></div><div class="table-toolbar"><p id="result-summary" aria-live="polite"></p><label>Ordenar por <select id="sort"><option value="priority">Prioridad de gestión</option><option value="name">Nombre del cliente</option><option value="date">Fecha crítica</option></select></label></div>
+      <div class="table-wrap"><table><caption class="sr-only">Clientes ficticios con estado, modalidad, vigencias y operaciones</caption><thead><tr><th scope="col">Cliente</th><th scope="col">Modalidad / modelo</th><th scope="col">Estado de control</th><th scope="col">Fecha crítica</th><th scope="col" class="numeric">DO activos</th><th scope="col"><span class="sr-only">Detalle</span></th></tr></thead><tbody id="rows"></tbody></table></div><div class="pagination"><span id="page-label"></span><div><button id="prev" type="button" aria-label="Página anterior">← Anterior</button><button id="next" type="button" aria-label="Página siguiente">Siguiente →</button></div></div>
+    </section>
+    <footer><span>Ágilex · ÁgilCargo <b>DEMO</b></span><p>Revisión: <span id="cycle">334</span> días · Urgente: ≤60 días · Próximo: 61–90 días.<br>La habilitación se confirma para cada mercancía, ruta y operación.</p><a href="datos/base_demo.json" download>Descargar datos JSON ↗</a></footer>
+    <noscript><p>Activa JavaScript para consultar el dashboard. Puedes abrir el Excel incluido.</p></noscript>
+  </main>
+</div>
+<dialog id="detail" aria-labelledby="detail-title"><div class="dialog-top"><span class="eyebrow">FICHA DE DEMOSTRACIÓN</span><button id="close-detail" type="button" aria-label="Cerrar ficha">✕</button></div><div id="detail-body"></div></dialog>
+</body></html>
