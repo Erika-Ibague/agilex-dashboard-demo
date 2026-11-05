@@ -1,58 +1,36 @@
-# Ágilex · Dashboard de clientes y aliados (DEMO)
+# Ágilex · Clientes, rutas y costos
 
-Dashboard estático para GitHub Pages, creado a partir de **Base Clientes y Aliados Ágilcargo.xlsx**. Incluye 20 clientes ficticios y sus registros relacionados. No necesita instalaciones, servidor, claves API ni base de datos externa.
+Dashboard estático para GitHub Pages, sin instalación ni servidor. Abre `index.html` para ver la demostración de 20 clientes ficticios. Paleta: morado #3D3977, morado profundo #28264E, amarillo #FFBD00 y fondo #F2F3F9. Se conserva el logo recibido.
 
-## 1. Verlo en tu computador
+## Publicar por primera vez
 
-1. Descarga el ZIP y elige **Extraer todo** o **Descomprimir**.
-2. Abre `index.html` con Chrome, Edge o Firefox. No abras el HTML desde dentro del ZIP.
-3. Prueba los filtros, la búsqueda, las páginas y **Ver ficha**. Los gráficos y los indicadores cambian con los filtros.
+1. Descomprime el ZIP en tu computador.
+2. Entra a https://github.com e inicia sesión. Pulsa **+ → New repository**.
+3. Nombre sugerido: `agilex-clientes`. Selecciona **Public** para la demo y **Create repository**.
+4. Pulsa **uploading an existing file** (o **Add file → Upload files**). Arrastra el contenido descomprimido, incluidas las carpetas. `index.html` debe quedar en la raíz, sin una carpeta adicional por encima. Pulsa **Commit changes**.
+5. Abre **Settings → Pages**. En **Build and deployment → Source**, elige **Deploy from a branch**. Selecciona **main**, carpeta **/(root)** y pulsa **Save**.
+6. Espera a que termine la publicación. En esa misma pantalla aparecerá **Visit site**. Tu enlace tendrá la forma `https://USUARIO.github.io/agilex-clientes/`.
+7. Para reemplazar una versión publicada, sube el contenido de esta entrega al mismo repositorio y confirma los cambios. Retira los archivos antiguos que ya no utilices.
 
-## 2. Crear tu repositorio
+La publicación inicial contiene exclusivamente datos de prueba. Un repositorio público y sus Excel son públicos: conserva los datos reales en Microsoft 365 y no los subas a GitHub.
 
-1. Entra a [github.com](https://github.com) e inicia sesión. Si no tienes cuenta, créala primero.
-2. En la parte superior, pulsa **+ → New repository**.
-3. Escribe `agilex-dashboard-demo` en **Repository name**.
-4. Elige **Public**. GitHub Free permite Pages en repositorios públicos. Este paquete contiene únicamente datos de demostración.
-5. Activa **Add README** para inicializar el repositorio.
-6. Pulsa **Create repository**.
+## Conectar los dos Excel de SharePoint
 
-## 3. Subir los archivos
+La conexión aún requiere configuración de tu organización. El enlace de una carpeta por sí solo no autoriza su lectura automática.
 
-1. Dentro del repositorio, pulsa **Add file → Upload files**.
-2. Arrastra **el contenido de la carpeta descomprimida**, incluidas las carpetas `datos` y `herramientas`. No subas el ZIP ni una carpeta adicional que envuelva todo.
-3. `index.html`, `styles.css`, `app.js`, `README.md`, `favicon.svg` y el Excel deben quedar en la raíz del repositorio. Dentro de `datos` deben quedar `data.js`, el JSON y los CSV.
-4. Puedes omitir `.nojekyll` si tu sistema no muestra archivos ocultos; el sitio usa HTML estático sencillo.
-5. En el mensaje de confirmación escribe `Agregar dashboard de demostración`.
-6. Pulsa **Commit changes**. El README incluido en el paquete sustituye el README inicial.
+1. Sube a tu carpeta de Microsoft 365 `Base_Clientes_y_Aliados_Agilcargo_DEMO.xlsx` y `Rutas_Costos_20_Clientes_DEMO.xlsx`.
+2. Pide a TI una aplicación **SPA de Microsoft Entra**, su **Client ID** y **Tenant ID**, con la URL exacta de GitHub Pages como redirección. Sigue `CONEXION_MICROSOFT_365.md`.
+3. En el dashboard pulsa **Configurar Microsoft 365 → Importar configuración local**. Selecciona el archivo `Conexion_SharePoint_LOCAL.json` que se entrega aparte del ZIP. Conserva ese archivo en tu computador.
+4. Completa los dos identificadores, guarda e inicia sesión en Microsoft. No necesitas contraseña en el código ni Client Secret.
+5. Navega por tu OneDrive empresarial hasta la carpeta correspondiente al enlace, pulsa **Usar esta carpeta**, selecciona los dos Excel y **Guardar y sincronizar**.
+6. El indicador superior confirmará la lectura. Mientras la página esté abierta, visible y autorizada, comprobará cambios cada dos minutos. **Sincronizar ahora** permite una lectura inmediata.
 
-## 4. Activar GitHub Pages
+La sincronización es de lectura; no edita los Excel. Al recargar la página debes iniciar sesión otra vez. La configuración queda en ese navegador; los tokens solo en memoria. No hay ejecución con la página cerrada. Si falla una lectura se conserva la última versión válida. **Desconectar y volver a demo** limpia los datos cargados de la vista.
 
-1. Abre **Settings** en el repositorio.
-2. En el menú lateral, abre **Pages**.
-3. En **Build and deployment → Source**, selecciona **Deploy from a branch**.
-4. En **Branch**, elige **main** y la carpeta **/(root)**.
-5. Pulsa **Save**.
-6. Espera a que termine la publicación. Vuelve a **Settings → Pages** y pulsa **Visit site** cuando aparezca.
-7. Tu dirección tendrá la forma `https://TU_USUARIO.github.io/agilex-dashboard-demo/`. Sustituye `TU_USUARIO` por tu usuario de GitHub; esta dirección de ejemplo todavía no es un sitio publicado.
+También puedes usar **Cargar Excel** para leer uno o ambos archivos localmente sin conexión Microsoft. Los archivos se procesan en el navegador.
 
-**Si aparece un error 404:** comprueba que `index.html` esté en la raíz de `main`, que seleccionaste `/(root)` y que la publicación haya terminado en la pestaña **Actions**. Una actualización puede tardar unos minutos en verse.
+## Uso diario
 
-## Archivos y diseño
+Filtra por mes, modelo A/B, responsable, estado o modalidad. Busca cliente o DO, cambia COP/USD y abre el nombre del cliente para consultar documentos, productos, contactos, vinculaciones, aliados, costos y adicionales. El CSV exporta la vista filtrada de rutas y costos.
 
-- `index.html`, `styles.css`, `app.js`: dashboard, sin instalaciones ni dependencias externas.
-- `Base_Clientes_y_Aliados_Agilcargo_DEMO.xlsx`: las 14 hojas originales diligenciadas con 20 clientes ficticios.
-- `datos/`: datos JSON, JavaScript y CSV, esquema original y descripción de los escenarios.
-- `herramientas/`: conversión opcional del Excel a los datos de la página.
-
-El dashboard incluye búsqueda, filtros, semáforo, gráficos, paginación, fichas por cliente y exportación CSV. El corte es fijo: **04/11/2026**. Conserva los umbrales y el ciclo de 334 días de tu archivo.
-
-Paleta propuesta, no verificada como manual oficial: azul oscuro **#18334D**, turquesa **#00A6A6**, naranja **#F2912A** y fondo **#F4F7FB**. Se añaden los cuatro colores del semáforo.
-
-**Editar o subir únicamente el Excel no actualiza la página:** lee `datos/data.js`. Consulta [datos, reglas y actualización opcional](DATOS_Y_REGLAS.md).
-
-**GitHub Pages es público. Mantén esta versión como demostración; los datos reales requieren acceso controlado.** Los contactos, identificaciones, permisos y soportes de este paquete son ficticios.
-
-Referencias: [crear GitHub Pages](https://docs.github.com/es/pages/getting-started-with-github-pages/creating-a-github-pages-site) y [configurar rama y carpeta](https://docs.github.com/es/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
-
-La entrega deja los archivos listos para subir. No crea ni publica un repositorio en tu cuenta.
+En el Excel de costos, selecciona el DO en `Ruta y Aliados!C5`; las hojas **Operaciones**, **Costos** y **Adicionales** son el origen editable. Consulta `DATOS_Y_REGLAS.md` antes de modificar columnas.

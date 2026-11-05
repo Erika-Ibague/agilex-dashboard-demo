@@ -1,0 +1,4 @@
+*.local.json
+Conexion_SharePoint_LOCAL.json
+qa/
+*.log

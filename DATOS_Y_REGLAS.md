@@ -1,65 +1,33 @@
-## Datos y reglas de la demostración
+# Datos y reglas de la demostración
 
+## Relación entre archivos
 
+La base mantiene sus 14 hojas y sus 20 clientes ficticios, vinculados por `ID_Cliente`. El nuevo formato conserva las cinco hojas del documento recibido y agrega **Operaciones**, **Costos** y **Adicionales**. Incluye 20 DO, 145 conceptos base y 17 adicionales. Cada operación pertenece a un cliente; cada concepto y adicional debe coincidir por cliente y DO.
 
-| Archivo o carpeta | Contenido |
-|---|---|
-| `index.html`, `styles.css`, `app.js` | Dashboard adaptable a computador y móvil, sin dependencias externas. |
-| `Base_Clientes_y_Aliados_Agilcargo_DEMO.xlsx` | Copia diligenciada del archivo recibido, con sus 14 hojas y los nombres de columnas originales. |
-| `datos/data.js` | Datos que carga el dashboard, incluso al abrir el HTML localmente. |
-| `datos/base_demo.json` | La misma información estructurada por hoja, con parámetros y escenarios. |
-| `datos/*.csv` | Una tabla por hoja de datos. Separador `;`, codificación UTF-8. |
-| `datos/esquema.json` | Nombres exactos de columnas del archivo original. |
-| `datos/escenarios.csv` | Los 20 casos, su acción de seguimiento y su resultado esperado. |
-| `herramientas/actualizar_datos.py` | Conversión opcional desde el Excel guardado con resultados recalculados. |
+`Ruta y Aliados!C5` selecciona el DO y completa automáticamente el formato y la vista de demoras. No sobrescribas sus fórmulas. Los datos de origen se editan en las tres tablas añadidas, desde la fila 5, sin cambiar los encabezados de la fila 4. Para estos 20 casos las fórmulas del consolidado alcanzan hasta la fila 504; si se amplía el volumen, amplía también fórmulas, validaciones y tablas. La posición de formato relaciona los conceptos con las filas originales (12–38); utiliza posiciones distintas por DO. Las fechas deben ser fechas Excel, no texto.
 
-Los registros incluyen 20 clientes, 40 contactos, 20 productos, 20 permisos, 40 documentos, 40 vinculaciones, 20 fichas de facturación, 20 cambios de bitácora y 7 aliados ficticios. El catálogo de puertos conserva ubicaciones geográficas.
+## Costos y modelos
 
-## Cómo se interpreta el semáforo
+- Modelo A: fee/costo de coordinación de ÁgilCargo y pagos directos del cliente a sus aliados.
+- Modelo B: costos de proveedores asumidos por ÁgilCargo. Los adicionales conservan la asignación explícita que tengan en su registro.
+- Se distinguen costo base, adicionales de ÁgilCargo, adicionales del cliente y **Por definir**. Estos últimos se muestran separados, sin atribuirlos a ninguna parte.
+- **Rechazado** se excluye del total final, pero permanece visible para trazabilidad. Pendientes de aprobación se incluyen como estimaciones, de acuerdo con el formato original. Un total registrado no implica que todos sus conceptos estén aprobados, facturados o pagados.
+- Solo COP y USD. Cada operación tiene su propia TRM simulada; USD→COP multiplica por ella. Para visualizar USD se convierte cada operación individualmente y luego se suma. No se suma un grupo de tasas ni se aplica una TRM global.
+- Total de prueba: **COP 142.998.950**, incluidos adicionales por definir. Es costo, no venta, utilidad, cartera ni autorización de pago. Todos los valores, soportes y TRM son ficticios.
 
-El sitio utiliza los campos calculados **Apto para operar** y **Prioridad de gestión** de la base:
+## Semáforo documental
 
-| Color | Regla en el dashboard |
-|---|---|
-| Rojo | Aptitud `NO`: vencimientos, aliado suspendido o cliente no activo. |
-| Naranja | Aptitud `CONDICIONADO`: urgencias o validaciones pendientes. |
-| Amarillo | Aptitud `SÍ` y prioridad `3-Media`: controles próximos. |
-| Verde | Aptitud `SÍ` y prioridad `4-Al día`. |
+La demo conserva los criterios del archivo previo, con corte 04/11/2026: **2 al día, 1 para programar, 10 para gestionar y 7 no habilitados**. Se recalculan a partir de los datos de documentos, permisos, vinculaciones, contactos y facturación, no del costo de la operación.
 
-Se conservan los parámetros del adjunto: **urgente hasta 60 días**, **próximo de 61 a 90 días**, **margen de trámite de 10 días** y **ciclo de revisión de 334 días**. Este último valor es el que trae tu archivo, no un año calendario; valídalo antes de uso operativo. La fecha de corte está fija en **04/11/2026** para que los ejemplos no cambien con el paso del tiempo.
+- Rojo: cliente no habilitado o control indispensable incumplido según la base.
+- Naranja: condicionado o pendiente de gestión.
+- Amarillo: fecha crítica dentro del horizonte de programación.
+- Verde: sin pendientes registrados al corte.
 
-La fecha límite de renovación considera vencimiento, tiempo de trámite y margen. La ficha permite revisar el caso que explica cada color. Un contacto vencido o una verificación bancaria pendiente pueden condicionar al cliente aunque su fecha crítica documental siga en el futuro.
+Los parámetros originales son 60 días de urgencia, 90 de programación, 10 de margen y **334 días de ciclo documental**. Este último es el valor heredado del archivo y es más corto que un año calendario: **valídalo con el equipo** antes de usar datos reales. La fecha de corte proviene de PARAMETROS!C5; no se sustituye silenciosamente por hoy. Recalcula y guarda la base para actualizar su corte. Un semáforo documental no sustituye la evaluación de viabilidad por mercancía, ruta, aliado y operación.
 
-Las fechas de las tablas JSON/CSV se guardan como números de serie de Excel para conservar el tipo de dato del archivo; el sitio las muestra como fechas legibles. La fecha de corte de los metadatos usa formato ISO `2026-11-04`.
+## Actualización y privacidad
 
-## Actualizar la demostración (opcional)
+Los datos incrustados en `datos/data.js` y `datos/costos.js` permiten abrir la demo sin servidor. Los JSON correspondientes sirven como fuentes de prueba. La lectura de Excel local o de Microsoft 365 reemplaza esos datos solo durante esa sesión del navegador; no modifica el repositorio. Los contactos reales del formato recibido fueron reemplazados por contactos ficticios con correos `example.invalid`.
 
-**Editar el Excel y subirlo por sí solo no cambia el dashboard.** La página lee `datos/data.js`.
-
-Si más adelante quieres actualizar los datos desde Excel:
-
-1. Edita **solo datos ficticios** en el Excel. Conserva hojas, encabezados e ID.
-2. Ábrelo con Excel de escritorio, recalcula las fórmulas y guarda el archivo. La herramienta no calcula fórmulas: lee los resultados guardados por Excel.
-3. Si tienes Python 3, ejecuta desde la carpeta del paquete:
-
-   ```bash
-   python herramientas/actualizar_datos.py Base_Clientes_y_Aliados_Agilcargo_DEMO.xlsx
-   ```
-
-4. La herramienta actualiza JSON, `data.js` y CSV. Las descripciones de escenarios son documentación manual: ajústalas si cambias el caso.
-5. Vuelve a subir el Excel y la carpeta `datos` al repositorio y confirma los cambios. GitHub Pages vuelve a publicar.
-
-## Diseño y alcance
-
-Paleta propuesta, **no verificada como manual oficial de marca**: azul oscuro `#18334D`, turquesa `#00A6A6`, naranja `#F2912A`, fondo `#F4F7FB`. El semáforo utiliza además verde, amarillo, naranja y rojo. La marca tipográfica es una representación de demostración, no el logotipo oficial.
-
-Es una vista de consulta. No guarda cambios, no consulta listas restrictivas, no verifica permisos, no inicia sesión y no se sincroniza con operaciones. La bitácora contiene ejemplos manuales.
-
-**GitHub Pages publica el contenido del sitio en Internet. Mantén esta versión como demostración; para datos reales de clientes se necesita una solución con acceso controlado.** Los correos y soportes `example.invalid`, los NIT `DEMO-NIT` y los teléfonos `DEMO-TEL` no identifican personas ni documentos reales. Los plazos, permisos, clasificaciones y autorizaciones son ejemplos, no requisitos legales.
-
-## Referencias para la publicación
-
-- [Crear un sitio de GitHub Pages](https://docs.github.com/es/pages/getting-started-with-github-pages/creating-a-github-pages-site).
-- [Configurar la rama y carpeta de publicación](https://docs.github.com/es/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
-
-La entrega deja los archivos listos para subir. No crea un repositorio ni publica en tu cuenta de GitHub.
+Nunca publiques Excel reales, expedientes, teléfonos, datos bancarios o enlaces privados en GitHub. El JSON de conexión LOCAL se entrega aparte y se importa desde el computador. `config.example.json` no contiene el enlace de tu carpeta.
