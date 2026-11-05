@@ -28,6 +28,6 @@ Los parámetros originales son 60 días de urgencia, 90 de programación, 10 de 
 
 ## Actualización y privacidad
 
-Los datos incrustados en `datos/data.js` y `datos/costos.js` permiten abrir la demo sin servidor. Los JSON correspondientes sirven como fuentes de prueba. La lectura de Excel local o de Microsoft 365 reemplaza esos datos solo durante esa sesión del navegador; no modifica el repositorio. Los contactos reales del formato recibido fueron reemplazados por contactos ficticios con correos `example.invalid`.
+Los datos ficticios, estilos, logo y scripts están integrados en `index.html`, que permite abrir la demo sin servidor ni carpetas adicionales. La lectura de Excel local o de Microsoft 365 reemplaza esos datos solo durante esa sesión del navegador; no modifica el repositorio. Los contactos reales del formato recibido fueron reemplazados por contactos ficticios con correos `example.invalid`.
 
-Nunca publiques Excel reales, expedientes, teléfonos, datos bancarios o enlaces privados en GitHub. El JSON de conexión LOCAL se entrega aparte y se importa desde el computador. `config.example.json` no contiene el enlace de tu carpeta.
+Nunca publiques Excel reales, expedientes, teléfonos, datos bancarios o enlaces privados en GitHub. El JSON de conexión LOCAL se entrega aparte y se importa desde el computador. La configuración privada no se publica en el repositorio.
